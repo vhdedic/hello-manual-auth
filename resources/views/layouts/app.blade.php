@@ -9,18 +9,28 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name', 'Laravel') }}</a>
+    <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }}</a>
         <ul class="nav navbar-nav ms-auto">
+        @auth
             <li>
-                <a class="nav-link text-right" href="{{ route('register') }}">
+                <a class="nav-link text-right" href="{{ url('logout') }}">
+                    Logout
+                </a>
+            </li>
+        @endauth
+
+        @guest
+            <li>
+                <a class="nav-link text-right" href="{{ url('register') }}">
                     Register
                 </a>
             </li>
             <li>
-                <a class="nav-link text-right" href="{{ route('login') }}">
+                <a class="nav-link text-right" href="{{ url('login') }}">
                     Login
                 </a>
             </li>
+        @endguest
         </ul>
     </div>
 </nav>

@@ -19,5 +19,8 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::controller(UserController::class)->group(function () {
     Route::get('register/', 'register')->name('register');
+    Route::post('register/', 'registerForm');
     Route::get('login/', 'login')->name('login');
+    Route::post('login/', 'loginForm');
+    Route::get('logout/', 'logout');
 });
