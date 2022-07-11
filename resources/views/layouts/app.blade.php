@@ -7,6 +7,23 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name', 'Laravel') }}</a>
+        <ul class="nav navbar-nav ms-auto">
+            <li>
+                <a class="nav-link text-right" href="{{ route('register') }}">
+                    Register
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-right" href="{{ route('login') }}">
+                    Login
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
     @yield('content')
 </div>
