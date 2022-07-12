@@ -6,15 +6,15 @@
     @foreach ($posts as $post)
         <div>
             <h2>
-                <a href="/posts/{{$post->id}}" class="text-decoration-none">
+                <a href="/posts/{{ $post->id }}" class="text-decoration-none">
                     {{ $post->title }}
                 </a>
             </h2>
             <span class="fw-bold">
-                {{$post->user->name}} - {{$post->updated_at}}
+                {{ $post->user->name }} - {{ $post->updated_at }}
             </span>
             <p>
-                {{Str::limit($post->body, 100)}}
+                {{ Str::limit($post->body, 100) }}
             </p>
             <hr />
         </div>

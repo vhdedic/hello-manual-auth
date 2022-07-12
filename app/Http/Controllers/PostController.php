@@ -37,4 +37,13 @@ class PostController extends Controller
         $post->save();
         return redirect('/');
     }
+
+    public function show($id)
+    {
+        $post = Post::find($id);
+
+        return view('posts.show', [
+            'post' => $post
+        ]);
+    }
 }
