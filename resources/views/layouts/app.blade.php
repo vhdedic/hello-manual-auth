@@ -13,7 +13,12 @@
         <ul class="nav navbar-nav ms-auto">
         @auth
             <li>
-                <a class="nav-link text-right" href="{{ url('logout') }}">
+                <a class="nav-link text-right" href="{{ route('posts.create') }}">
+                    Create New Post
+                </a>
+            </li>
+            <li>
+                <a class="nav-link text-right" href="{{ route('logout') }}">
                     Logout
                 </a>
             </li>
@@ -21,12 +26,12 @@
 
         @guest
             <li>
-                <a class="nav-link text-right" href="{{ url('register') }}">
+                <a class="nav-link text-right" href="{{ route('register') }}">
                     Register
                 </a>
             </li>
             <li>
-                <a class="nav-link text-right" href="{{ url('login') }}">
+                <a class="nav-link text-right" href="{{ route('login') }}">
                     Login
                 </a>
             </li>
