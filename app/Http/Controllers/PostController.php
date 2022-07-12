@@ -46,4 +46,31 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
+
+    public function edit($id)
+    {
+        $post = Post::find($id);
+
+        return view('posts.edit', [
+            'post' => $post
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        $post = Post::find($id);
+
+        $post->user_id = Auth::id();
+        $post->title = $request->title;
+        $post->body = $request->body;
+
+        $post->save();
+        return redirect('posts/'.$post->id);
+    }
+
 }

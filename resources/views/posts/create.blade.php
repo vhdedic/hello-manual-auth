@@ -4,7 +4,7 @@
     <h1 class="my-4">Create New Post</h1>
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="{{ url('posts/') }}">
+            <form method="POST" action="{{ route('posts.store') }}">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
