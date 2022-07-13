@@ -11,6 +11,7 @@ Route::controller(PostController::class)->group(function () {
     Route::get('posts/{id}', 'show')->name('posts.show');
     Route::get('posts/{id}/edit', 'edit')->name('posts.edit');
     Route::put('posts/{id}/edit', 'update')->name('posts.update');
+    Route::delete('posts/{id}', 'destroy')->name('posts.destroy');
 });
 
 Route::controller(UserController::class)->group(function () {
