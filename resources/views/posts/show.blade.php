@@ -6,9 +6,11 @@
         <span class="fw-bold">
             {{ $post->user->name }} - {{ $post->updated_at }}
         </span>
-        <a href="{{ route('posts.edit', $post->id) }}" class="text-decoration-none">
-            Edit
-        </a>
+        @if (auth()->check() && auth()->user()->id == $post->user_id)
+            <a href="{{ route('posts.edit', $post->id) }}" class="text-decoration-none">
+                edit
+            </a>
+        @endif
     </div>
     <p class="my-4">{{ $post->body }}</p>
 @endsection
