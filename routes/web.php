@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,5 @@ Route::controller(UserController::class)->group(function () {
     Route::post('login/', 'loginForm');
     Route::get('logout/', 'logout')->name('logout');
 });
+
+Route::post('posts/{id}/comments/', [CommentController::class, 'store'])->name('comments.store');
