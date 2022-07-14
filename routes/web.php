@@ -23,4 +23,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get('logout/', 'logout')->name('logout');
 });
 
-Route::post('posts/{id}/comments/', [CommentController::class, 'store'])->name('comments.store');
+Route::controller(CommentController::class)->group(function () {
+    Route::post('posts/{id}/comments/', 'store')->name('comments.store');
+    Route::get('comments/{id}/edit/', 'edit')->name('comments.edit');
+    Route::put('comments/{id}/edit/', 'update')->name('comments.update');
+});

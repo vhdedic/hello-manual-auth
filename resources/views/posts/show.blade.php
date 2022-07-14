@@ -19,10 +19,19 @@
     @else
         @foreach ($comments as $comment)
             <div class="card my-4 p-3">
+                <div>
                 <span class="fw-bold">
                     {{ $comment->user->name }} - {{ $comment->updated_at }}
                 </span>
-                <p class="custom-ws my-4">{{ $comment->body }}</p>
+                @if (auth()->check() && auth()->user()->id == $comment->user_id)
+                    <span>
+                        <a href="{{ route('comments.edit', $comment->id) }}" class="text-decoration-none">
+                            edit
+                        </a>
+                    </span>
+                </div>
+                @endif
+                <p class="my-4">{{ $comment->body }}</p>
             </div>
         @endforeach
     @endif
