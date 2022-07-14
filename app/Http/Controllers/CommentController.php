@@ -51,4 +51,14 @@ class CommentController extends Controller
         
         return redirect('posts/'.$comment->post_id);
     }
+
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+        $post = Comment::find(1)->where('id', $id)->first();
+
+        $comment->delete();
+        
+        return redirect('posts/'.$post->post_id);
+    }
 }
