@@ -8,13 +8,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * UserController
+ */
 class UserController extends Controller
 {
+    /**
+     * register
+     *
+     * @return void
+     */
     public function register()
     {
+        if (Auth::check()) {
+            return redirect('/');
+        }
         return view('users.register');
     }
 
+    /**
+     * registerForm
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function registerForm(Request $request)
     {
         $request->validate([
@@ -29,15 +46,30 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
-        
+
         return redirect('/login');
     }
 
+    /**
+     * login
+     *
+     * @return void
+     */
     public function login()
     {
+        if (Auth::check()) {
+            return redirect('/');
+        }
+
         return view('users.login');
     }
 
+    /**
+     * loginForm
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function loginForm(Request $request)
     {
         $credentials = $request->validate([
@@ -49,20 +81,26 @@ class UserController extends Controller
         $password = $request->password;
 
         $hashedPassword = DB::table('users')->where('email', $email)->value('password');
-        
+
         if (Hash::check($password, $hashedPassword)) {
-            
+
             if (Auth::attempt($credentials)) {
-                
+
                 $request->session()->regenerate();
                 return redirect('/');
             }
         } else {
-            
+
             return redirect('/login');
         }
     }
 
+    /**
+     * logout
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function logout(Request $request)
     {
         Auth::logout();

@@ -7,38 +7,67 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * PostController
+ */
 class PostController extends Controller
 {
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         $posts = Post::orderBy('updated_at', 'desc')->get();
-        
+
         return view('posts.index', [
             'posts' => $posts
         ]);
     }
 
+    /**
+     * create
+     *
+     * @return void
+     */
     public function create()
     {
         return view('posts.create');
     }
 
+    /**
+     * store
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'body' => 'required'
-        ]);
+        if (Auth::check()) {
 
-        $post = new Post();
-        $post->user_id = Auth::id();
-        $post->title = $request->title;
-        $post->body = $request->body;
+            $request->validate([
+                'title' => 'required',
+                'body' => 'required'
+            ]);
 
-        $post->save();
+            $post = new Post();
+            $post->user_id = Auth::id();
+            $post->title = $request->title;
+            $post->body = $request->body;
+
+            $post->save();
+        }
+
         return redirect('/');
     }
 
+    /**
+     * show
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function show($id)
     {
         $post = Post::find($id);
@@ -50,38 +79,73 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * edit
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function edit($id)
     {
         $post = Post::find($id);
 
-        return view('posts.edit', [
-            'post' => $post
-        ]);
+        if (Auth::id() == $post->user_id) {
+
+            return view('posts.edit', [
+                'post' => $post
+            ]);
+
+        } else {
+
+            return redirect('/');
+        }
     }
 
+    /**
+     * update
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'body' => 'required'
-        ]);
-
         $post = Post::find($id);
 
-        $post->user_id = Auth::id();
-        $post->title = $request->title;
-        $post->body = $request->body;
+        if (Auth::id() == $post->user_id) {
 
-        $post->save();
-        return redirect('posts/'.$post->id);
+            $request->validate([
+                'title' => 'required',
+                'body' => 'required'
+            ]);
+
+            $post->user_id = Auth::id();
+            $post->title = $request->title;
+            $post->body = $request->body;
+
+            $post->save();
+            return redirect('posts/'.$post->id);
+        } else {
+
+            return redirect('/');
+        }
     }
 
+    /**
+     * destroy
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function destroy($id)
     {
         $post = Post::find($id);
-        $post->delete();
-        
+
+        if (Auth::id() == $post->user_id) {
+
+            $post->delete();
+        }
+
         return redirect('/');
     }
-
 }
